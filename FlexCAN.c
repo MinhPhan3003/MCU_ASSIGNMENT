@@ -25,12 +25,12 @@ void CAN_Init(uint32_t rx_id)
     CAN_CTRL1_t ctrl1;
     CAN_MB_CS_t cs;
 
-    /* 1. PCC_FlexCAN0 has only CGC (RM 29.6.4): the PE clock is chosen by
+    /* 1. PCC_FlexCAN0 has only CGC: the PE clock is chosen by
      *    CTRL1[CLKSRC], not by PCC[PCS] */
     CLOCK_EnablePeripheral(PCC_FLEXCAN0, PCS_PCC_OFF);
-    CLOCK_EnablePeripheral(CAN_PCC_PORT, PCS_PCC_OFF);
-    PORT_SetMux(CAN_PORT, CAN_RX_PIN, CAN_PIN_MUX);
-    PORT_SetMux(CAN_PORT, CAN_TX_PIN, CAN_PIN_MUX);
+    CLOCK_EnablePeripheral(PCC_PORTE, PCS_PCC_OFF);
+    PORT_SetMux(PORTE, CAN_RX_PIN, PORT_MUX_ALT5);
+    PORT_SetMux(PORTE, CAN_TX_PIN, PORT_MUX_ALT5);
 
     /* 2. After reset the module is in Disable mode (MCR[MDIS] = 1).
      *    CLKSRC can be written only in this mode. 0 = SOSCDIV2 8 MHz */
